@@ -34,7 +34,7 @@ export default function SessionsPage( { setDiaInfo, setHoraInfo } ) {
                                 <button data-test="showtime">{dia.showtimes[0].name}</button>
                             </Link>
                             <Link to={`/assentos/${dia.showtimes[1].id}`} key={dia.showtimes[1].id} >
-                                <button >{dia.showtimes[1].name}</button>
+                                <button data-test="showtime">{dia.showtimes[1].name}</button>
                             </Link>
                         </ButtonsContainer>
                     </div>

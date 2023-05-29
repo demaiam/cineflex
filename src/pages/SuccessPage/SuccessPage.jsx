@@ -22,7 +22,7 @@ export default function SuccessPage() {
             <TextContainer>
                 <strong>Ingressos</strong>
                 {assentos.map( seat => (
-                    <a>Assento {seat}</a>
+                    <a key={seat}>Assento {seat}</a>
                 ))}
             </TextContainer>
             </div>

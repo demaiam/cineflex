@@ -24,6 +24,7 @@ export default function SeatsPage() {
         });
     }, []);
 
+    console.log(assentos);
 
     function enviarServidor(event) {
         event.preventDefault();
@@ -37,7 +38,7 @@ export default function SeatsPage() {
     }
 
     function selecionarAssento(assento) {
-        if (!assento.isAvaiable) {
+        if (assento.isAvailable == false) {
             alert('Esse assento não está disponível');
         } else if (selecionados.includes(assento.name)) {
             const novoArr = [...selecionados];
@@ -63,7 +64,7 @@ export default function SeatsPage() {
                     {assentos.map(assento =>
                         <SeatItem key={assento.id}
                                   indice={assento.name}
-                                  status={assento.isAvaiable}
+                                  estado={assento.isAvailable}
                                   selecionado={selecionados}>
                             <button onClick={() => selecionarAssento(assento)}
                                     data-test="seat">
@@ -91,7 +92,7 @@ export default function SeatsPage() {
                 <FormContainer>
                     <form onSubmit={enviarServidor}>
                         Nome do Comprador:
-                        <input type="nome"
+                        <input type="text"
                             value={nome}
                             onChange={e => setNome(e.target.value)}
                             placeholder="Digite seu nome..."
@@ -100,7 +101,7 @@ export default function SeatsPage() {
                         <br></br>
 
                         CPF do Comprador:
-                        <input type="cpf"
+                        <input type="number"
                             value={cpf}
                             onChange={e => setCPF(e.target.value)}
                             placeholder="Digite seu CPF..."
@@ -203,18 +204,18 @@ const SeatItem = styled.div`
         border: 1px solid ${ (props => {
             if (props.selecionado.includes(props.indice))
                 return '#0E7D71'
-            else if (props.status)
+            else if (props.estado === true)
                 return '#808F9D'
-            else
+            else if (props.estado === false)
                 return '#F7C52B'
         }
         )};
         background-color: ${(props => {
             if (props.selecionado.includes(props.indice))
                 return '#1AAE9E'
-            else if (props.status)
+            else if (props.estado === true)
                 return '#C3CFD9'
-            else
+            else if (props.estado === false)
                 return '#FBE192'
         })};
         height: 25px;

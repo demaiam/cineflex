@@ -35,11 +35,11 @@ export default function SuccessPage() {
             </TextContainer>
             </div>
             
-            <div data-test="go-home-btn">
+            
             <Link to={`/`}>
-                <button>Voltar para Home</button>
+                <button data-test="go-home-btn">Voltar para Home</button>
             </Link>
-            </div>
+            
             
         </PageContainer>
     )
@@ -82,10 +82,11 @@ const PageContainer = styled.div`
     }
 `
 const TextContainer = styled.div`
+    text-align: center;
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     margin-top: 30px;
     strong {
         font-weight: bold;

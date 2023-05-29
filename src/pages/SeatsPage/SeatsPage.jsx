@@ -24,8 +24,6 @@ export default function SeatsPage() {
         });
     }, []);
 
-    console.log(assentos);
-
     function enviarServidor(event) {
         event.preventDefault();
         const obj = {ids: selecionados, name: nome, cpf: cpf};
@@ -33,20 +31,21 @@ export default function SeatsPage() {
         const nomeFilme = filme.movie.title;
         const diaFilme = filme.day.date;
         const horaFilme = filme.name;
-        requisicao.then(resposta =>
-            navegar('/sucesso', {state: { cpf, nome, selecionados, nomeFilme, horaFilme, diaFilme }}));
+        requisicao.then(resposta => {
+            navegar('/sucesso', {state: { cpf, nome, selecionados, nomeFilme, horaFilme, diaFilme }})
+            console.log(resposta)});
     }
 
     function selecionarAssento(assento) {
         if (assento.isAvailable == false) {
             alert('Esse assento não está disponível');
-        } else if (selecionados.includes(assento.name)) {
+        } else if (selecionados.includes(assento.id)) {
             const novoArr = [...selecionados];
-            const posicao = novoArr.indexOf(assento.name);
+            const posicao = novoArr.indexOf(assento.id);
             novoArr.splice(posicao, 1);
             setSelecionados(novoArr);
         } else {
-            const novoArr = [...selecionados, assento.name];
+            const novoArr = [...selecionados, assento.id];
             setSelecionados(novoArr);
         }
     }
@@ -63,7 +62,7 @@ export default function SeatsPage() {
                 <SeatsContainer>
                     {assentos.map(assento =>
                         <SeatItem key={assento.id}
-                                  indice={assento.name}
+                                  indice={assento.id}
                                   estado={assento.isAvailable}
                                   selecionado={selecionados}>
                             <button onClick={() => selecionarAssento(assento)}

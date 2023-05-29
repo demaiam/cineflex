@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from 'axios';
 import styled from "styled-components"
 
-export default function SeatsPage( { setCpfInfo, setNomeInfo } ) {
+export default function SeatsPage() {
     const [filme, setFilme] = useState([]);
     const [assentos, setAssentos] = useState([]);
 
@@ -27,17 +27,17 @@ export default function SeatsPage( { setCpfInfo, setNomeInfo } ) {
 
     function enviarServidor(event) {
         event.preventDefault();
-        const objServidor = {ids: selecionados, name: nome, cpf: cpf};
-        //const requisicao = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', obj);
-        setCpfInfo(cpf);
-        setNomeInfo(nome);
-        setAssentos(selecionados);
-        //requisicao.then(resposta =>
-            navegar('/sucesso', {state: {cpf}});
+        const obj = {ids: selecionados, name: nome, cpf: cpf};
+        const requisicao = axios.post('https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many', obj);
+        const nomeFilme = filme.movie.title;
+        const diaFilme = filme.day.date;
+        const horaFilme = filme.name;
+        requisicao.then(resposta =>
+            navegar('/sucesso', {state: { cpf, nome, selecionados, nomeFilme, horaFilme, diaFilme }}));
     }
 
     function selecionarAssento(assento) {
-        if (assento.isAvaiable) {
+        if (!assento.isAvaiable) {
             alert('Esse assento não está disponível');
         } else if (selecionados.includes(assento.name)) {
             const novoArr = [...selecionados];
@@ -112,12 +112,14 @@ export default function SeatsPage( { setCpfInfo, setNomeInfo } ) {
                 </FormContainer>
 
                 <FooterContainer>
-                    <div>
-                        <img src={filme.movie.posterURL} alt="poster" />
-                    </div>
-                    <div>
-                        <a>{filme.movie.title}</a>
-                        <strong>{filme.day.weekday} - {filme.name}</strong>
+                    <div data-test="footer">
+                        <div>
+                            <img src={filme.movie.posterURL} alt="poster" />
+                        </div>
+                        <div>
+                            <p><strong>{filme.movie.title}</strong></p>
+                            <p>{filme.day.weekday} - {filme.name}</p>
+                        </div>
                     </div>
                 </FooterContainer>
 
@@ -232,40 +234,27 @@ const SeatItem = styled.div`
 
 
 const FooterContainer = styled.div`
+    left: 0;
     width: 100%;
     height: 120px;
     background-color: #C3CFD9;
     display: flex;
-    flex-direction: row;
     align-items: center;
     font-size: 20px;
     position: fixed;
     bottom: 0;
 
     div:nth-child(1) {
-        box-shadow: 0px 2px 4px 2px #0000001A;
-        border-radius: 3px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: white;
         margin: 12px;
         img {
+            border-radius: 3px;
+            background-color: white;
+            box-shadow: 0px 2px 4px 2px #0000001A;
             width: 50px;
-            height: 70px;
+            height: 70px;   
             padding: 8px;
         }
-    }
-
-    div:nth-child(2) {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        p {
-            text-align: left;
-            &:nth-child(2) {
-                margin-top: 10px;
-            }
-        }
-    }
 `

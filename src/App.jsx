@@ -11,14 +11,7 @@ axios.defaults.headers.common['Authorization'] = '97eVqU1AsszfPTccPmhDFe5m';
 
 export default function App() {
 
-    const [objFinal, setObjFinal] = useState({
-        filme: '',
-        dia: '',
-        hora: '',
-        nome: '',
-        cpf: '',
-        assentos: []
-    });
+
 
     return (
         <>
@@ -28,15 +21,10 @@ export default function App() {
 
             <Routes>
 
-                <Route path='/' element={<HomePage
-                                            filmeInfo={objFinal}
-                                            setFilmeInfo={setObjFinal} />} />
-                <Route path='/sessoes/:idFilme' element={<SessionsPage 
-                                             />} />
-                <Route path='/assentos/:idSessao' element={<SeatsPage
-                                             />} />
-                <Route path='/sucesso' element={<SuccessPage 
-                                             />} />
+                <Route path='/' element={<HomePage/>} />
+                <Route path='/sessoes/:idFilme' element={<SessionsPage/>} />
+                <Route path='/assentos/:idSessao' element={<SeatsPage/>} />
+                <Route path='/sucesso' element={<SuccessPage/>} />
             </Routes>
 
         </BrowserRouter>

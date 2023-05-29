@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import styled from "styled-components";
 
-export default function HomePage( { filmeInfo, setFilmeInfo }) {
+export default function HomePage( ) {
     const [filmes, setFilmes] = useState([]);
 
     useEffect(() => {
@@ -14,10 +14,6 @@ export default function HomePage( { filmeInfo, setFilmeInfo }) {
         });
     }, []);
 
-    function selecionarFilme(nomeFilme) {
-        setFilmeInfo(nomeFilme);
-        console.log(filmeInfo)
-    }
 
     if (filmes.length === 0) {
         return (
@@ -33,7 +29,7 @@ export default function HomePage( { filmeInfo, setFilmeInfo }) {
                     {filmes.map( filme => 
                                 <Link to={`/sessoes/${filme.id}`} key={filme.id} >
                                     <MovieContainer> 
-                                        <img src={filme.posterURL} alt="poster" onClick={() => selecionarFilme(filme.title)}/> 
+                                        <img src={filme.posterURL} alt="poster" data-test="movie"/> 
                                     </MovieContainer>
                                 </Link>
                                 )}

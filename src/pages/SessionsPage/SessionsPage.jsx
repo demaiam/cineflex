@@ -19,10 +19,7 @@ export default function SessionsPage( { setDiaInfo, setHoraInfo } ) {
         });
     }, []);
 
-    function selecionarHorario(dia, hora) {
-        setDiaInfo(dia);
-        setHoraInfo(hora);
-    }
+
 
     return (
         <PageContainer>
@@ -30,24 +27,26 @@ export default function SessionsPage( { setDiaInfo, setHoraInfo } ) {
             <div>
             {dias.map (dia =>
                 <SessionContainer key={dia.date}>
-                    {dia.weekday} - {dia.date}
-                    <ButtonsContainer>
-                        <Link to={`/assentos/${dia.showtimes[0].id}`} key={dia.showtimes[0].id} >
-                            <button onClick={() => selecionarHorario(dia.date, dia.showtimes[0].name)}>{dia.showtimes[0].name}</button>
-                        </Link>
-                        <Link to={`/assentos/${dia.showtimes[1].id}`} key={dia.showtimes[1].id} >
-                            <button onClick={() => selecionarHorario(dia.date, dia.showtimes[1].name)}>{dia.showtimes[1].name}</button>
-                        </Link>
-                    </ButtonsContainer>
+                    <div data-test="movie-day">
+                        {dia.weekday} - {dia.date}
+                        <ButtonsContainer>
+                            <Link to={`/assentos/${dia.showtimes[0].id}`} key={dia.showtimes[0].id} >
+                                <button data-test="showtime">{dia.showtimes[0].name}</button>
+                            </Link>
+                            <Link to={`/assentos/${dia.showtimes[1].id}`} key={dia.showtimes[1].id} >
+                                <button >{dia.showtimes[1].name}</button>
+                            </Link>
+                        </ButtonsContainer>
+                    </div>
                 </SessionContainer>)}
             </div>
 
             <FooterContainer>
-                <div>
-                    <img src={filme.posterURL} alt="poster" />
-                </div>
-                <div>
-                    <a>{filme.title}</a>
+                <div data-test="footer">
+                        <img src={filme.posterURL} alt="poster" />
+
+                        <p>{filme.title}</p>
+
                 </div>
             </FooterContainer>
 
@@ -105,34 +104,24 @@ const FooterContainer = styled.div`
     height: 120px;
     background-color: #C3CFD9;
     display: flex;
-    flex-direction: row;
     align-items: center;
     font-size: 20px;
     position: fixed;
     bottom: 0;
 
     div:nth-child(1) {
-        box-shadow: 0px 2px 4px 2px #0000001A;
-        border-radius: 3px;
+        gap: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: white;
         margin: 12px;
         img {
+            border-radius: 3px;
+            background-color: white;
+            box-shadow: 0px 2px 4px 2px #0000001A;
             width: 50px;
-            height: 70px;
+            height: 70px;   
             padding: 8px;
-        }
-    }
-
-    div:nth-child(2) {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        a {
-            text-align: left;
-            margin-top: -20px;
         }
     }
 `

@@ -1,32 +1,45 @@
-import { Link } from "react-router-dom"
 import styled from "styled-components"
+import { useLocation } from "react-router-dom"
+import { Link } from "react-router-dom";
 
-export default function SuccessPage( {filme, dia, hora, nome, cpf, assentos } ) {
+export default function SuccessPage() {
+    let dados = useLocation().state;
+    const assentos = dados.selecionados;
 
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
+            <div data-test="movie-info">
             <TextContainer>
-                <strong><p>Filme e sessão</p></strong>
-                <p>{filme}</p>
-                <p>{dia} - {hora}</p>
+                <strong>Filme e sessão</strong>
+                <a>{dados.nomeFilme}</a>
+                <a>{dados.diaFilme} - {dados.horaFilme}</a>
             </TextContainer>
+            </div>
 
+            <div data-test="seats-info">
             <TextContainer>
-                <strong><p>Ingressos</p></strong>
-                
+                <strong>Ingressos</strong>
+                {assentos.map( seat => (
+                    <a>Assento {seat}</a>
+                ))}
             </TextContainer>
-
-            <TextContainer>
-                <strong><p>Comprador</p></strong>
-                <p>Nome: {nome}</p>
-                <p>CPF: {cpf}</p>
-            </TextContainer>
+            </div>
             
+            <div data-test="client-info">
+            <TextContainer>
+                <strong>Comprador</strong>
+                <a>Nome: {dados.nome}</a>
+                <a>CPF: {dados.cpf}</a>
+            </TextContainer>
+            </div>
+            
+            <div data-test="go-home-btn">
             <Link to={`/`}>
                 <button>Voltar para Home</button>
             </Link>
+            </div>
             
         </PageContainer>
     )
@@ -46,7 +59,15 @@ const PageContainer = styled.div`
         text-decoration: none;
     }
     button {
+        width: 225px;
+        height: 42px;
         margin-top: 50px;
+        font-size: 15px;
+        align-self: center;
+        background: #E8833A;
+        color: #FFFFFF;
+        border-radius: 3px;
+        border: none;
     }
     h1 {
         font-family: 'Roboto';
